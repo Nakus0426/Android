@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="700px"
+        android:layout_height="850px">
+
+        <TextView
+            android:id="@+id/show_username"
+            android:layout_width="match_parent"
+            android:layout_height="80px"
+            android:text="用户名："
+            android:textSize="25dp"/>
+
+        <TextView
+            android:id="@+id/show_password"
+            android:layout_width="match_parent"
+            android:layout_height="80px"
+            android:layout_marginTop="160px"
+            android:text="密码名："
+            android:textSize="25dp"/>
+
+        <TextView
+            android:id="@+id/show_email"
+            android:layout_width="match_parent"
+            android:layout_height="80px"
+            android:layout_marginTop="320px"
+            android:text="E-mail地址："
+            android:textSize="25dp"/>
+    </RelativeLayout>
+
+</android.support.constraint.ConstraintLayout>

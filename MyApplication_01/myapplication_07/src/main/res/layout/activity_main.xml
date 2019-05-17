@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <RelativeLayout
+        android:layout_width="500px"
+        android:layout_height="match_parent"
+        android:layout_marginTop="10px">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="80px"
+            android:text="用户名："
+            android:textSize="25dp"/>
+        <EditText
+            android:id="@+id/username"
+            android:layout_width="match_parent"
+            android:layout_height="120px"
+            android:layout_marginTop="100px"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="80px"
+            android:layout_marginTop="200px"
+            android:text="密码名："
+            android:textSize="25dp"/>
+        <EditText
+            android:id="@+id/password1"
+            android:layout_width="match_parent"
+            android:layout_height="120px"
+            android:layout_marginTop="300px"
+            android:password="true"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="80px"
+            android:layout_marginTop="400px"
+            android:text="确认密码："
+            android:textSize="25dp"/>
+        <EditText
+            android:id="@+id/password2"
+            android:layout_width="match_parent"
+            android:layout_height="120px"
+            android:layout_marginTop="500px"
+            android:password="true"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="80px"
+            android:layout_marginTop="600px"
+            android:text="E-mail地址："
+            android:textSize="25dp"/>
+        <EditText
+            android:id="@+id/email"
+            android:layout_width="match_parent"
+            android:layout_height="120px"
+            android:layout_marginTop="700px"/>
+
+        <Button
+            android:id="@+id/submit"
+            android:layout_width="200px"
+            android:layout_height="120px"
+            android:layout_marginTop="800px"
+            android:gravity="center"
+            android:text="提交"
+            android:textColor="#fff"
+            android:textSize="20dp" />
+    </RelativeLayout>
+
+</android.support.constraint.ConstraintLayout>

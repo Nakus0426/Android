@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">My Application_04</string>
+    <string-array name="cinemas">
+        <item>新时代环球影城</item>
+        <item>桂林红街巨幕</item>
+        <item>中影国际影城</item>
+        <item>万达影城</item>
+        <item>银河欢乐影城</item>
+    </string-array>
+</resources>
