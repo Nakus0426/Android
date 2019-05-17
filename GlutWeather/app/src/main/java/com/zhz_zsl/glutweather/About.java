@@ -47,7 +47,7 @@ public class About extends Activity {
             @Override
             public void onClick(View view) {
                 //跳转网页
-                Uri uri=Uri.parse("https://github.com/Xxianglei/HeartWeather");   //指定网址
+                Uri uri=Uri.parse("https://github.com/Nakus0426/Android/tree/master/GlutWeather");   //指定网址
                 Intent intent=new Intent(Intent.ACTION_VIEW,uri);
                 //启动Activit
                 startActivity(intent);
