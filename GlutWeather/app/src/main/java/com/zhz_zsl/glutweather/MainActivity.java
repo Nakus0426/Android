@@ -231,8 +231,6 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
                 e.printStackTrace();
 
             }
-            // 更换API https://free-api.heweather.com/v5/aqi?city=jilin&key=%20f75021d48c674f89b3928c2524644ac8
-            // https://api.seniverse.com/v3/air/now.json?key=ftyaftrewoqijxd5&location=beijing&language=zh-Hans&scope=city
             String address = "https://free-api.heweather.com/v5/aqi?city=" + city1 + "&key=%20f75021d48c674f89b3928c2524644ac8";
             HttpDownloader httpDownloader = new HttpDownloader();
             String jsonString = httpDownloader.download(address);
@@ -264,7 +262,6 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
 
             }
 
-            // https://free-api.heweather.com/v5/now?city=jilin&key=f75021d48c674f89b3928c2524644ac8
             String address = "https://free-api.heweather.com/v5/now?city=" + city1 + "&key=f75021d48c674f89b3928c2524644ac8";
             HttpDownloader httpDownloader = new HttpDownloader();
             String jsonString = httpDownloader.download(address);
@@ -296,8 +293,6 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
                 e.printStackTrace();
 
             }
-            //https://api.seniverse.com/v3/weather/daily.json?key=ftyaftrewoqijxd5&location=beijing&language=zh-Hans&unit=c&start=0&days=5
-            // https://api.seniverse.com/v3/weather/daily.json?key=ftyaftrewoqijxd5&location=beijing&language=zh-Hans&unit=c&start=0&days=5
             String address = "https://api.seniverse.com/v3/weather/daily.json?key=SXYZSglxbHO5vX5Ml&location=" + city6 + "&language=zh-Hans&unit=c&start=0&days=5";
             HttpDownloader httpDownloader = new HttpDownloader();
             String jsonString = httpDownloader.download(address);
