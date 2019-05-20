@@ -978,15 +978,9 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
             fourxiao.setImageResource(R.mipmap.leibing);
         }
     }
-
-
+    
     //清空天气列表中的数据
     private void clearWeatherList() {
         WeatherList.clear();
     }
 }
-
-
-
-
-
