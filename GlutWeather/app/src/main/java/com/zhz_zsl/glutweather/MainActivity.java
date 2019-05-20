@@ -109,7 +109,7 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
     private StringBuffer buffer;
     private String imagePath;
     private int[] path = new int[]{R.mipmap.one, R.mipmap.two, R.mipmap.three, R.mipmap.four, R.mipmap.ll};
-    //异步更新UI控件中的当前天气信息
+    //定位成功后更新UI控件中的背景图片
     private Handler mmHandler = new Handler() {
         public void handleMessage(android.os.Message msg) {
             switch (msg.what) {
@@ -153,7 +153,9 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
     private ProgressDialog dialog;
     private RelativeLayout relativeLayout;
 
-
+    /**
+     * 应用刷新时向更新背景图片方法发送指令
+     */
     public void onRefresh() {
 
         mmHandler.sendEmptyMessageDelayed(REFRESH_COMPLETE, 2000);
