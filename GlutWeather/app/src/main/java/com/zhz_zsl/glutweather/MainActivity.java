@@ -168,7 +168,8 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
         public void handleMessage(Message msg) {
 
             super.handleMessage(msg);
-            if (msg.what == 0x12) {   //实况
+            //实时天气信息
+            if (msg.what == 0x12) {
                 try {
                     String jsonString = (String) msg.obj;
                     Log.i("传递过来的json",jsonString);
@@ -189,6 +190,7 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
                 try {
                     String jsonString = (String) msg.obj;
                     ParseWeatherUtil parseWeatherUtil = new ParseWeatherUtil();
+                    //清除天气数据
                     clearWeatherList();
                     WeatherList = parseWeatherUtil.getInfomation(jsonString);
                     //设置数据
@@ -215,38 +217,46 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
         }
     };
 
+    /**
+     * 空气质量信息线程
+     */
     private class WeatherpmThread implements Runnable {
 
-        private String city = "guilin";
+        private String city;
 
         public WeatherpmThread(String city) {
             this.city = city;
-
         }
 
         public void run() {
             try {
+                //将城市字段转码为UTF-8
                 city1 = URLEncoder.encode(city, "UTF-8");
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
-
             }
+            //通过“私钥”直接请求方式获取天气信息
             String address = "https://free-api.heweather.com/v5/aqi?city=" + city1 + "&key=%20f75021d48c674f89b3928c2524644ac8";
             HttpDownloader httpDownloader = new HttpDownloader();
             String jsonString = httpDownloader.download(address);
 
             Log.w("WeatherpmThread接收的json:", jsonString);
 
+            //通过obtain（）方法获取Message对象
             Message message = Message.obtain();
             message.obj = jsonString;
             message.what = 0x13;
+            //通过handler传递Message
             mHandler.sendMessage(message);
         }
     }
 
+    /**
+     * 实时天气线程
+     */
     private class WeatherThread implements Runnable {
 
-        private String city = "guilin";
+        private String city;
 
         public WeatherThread(String city) {
             this.city = city;
@@ -266,7 +276,6 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
             HttpDownloader httpDownloader = new HttpDownloader();
             String jsonString = httpDownloader.download(address);
 
-            //打印weather info
             Log.w("WeatherThread中接收到的json:", jsonString);
 
             Message message = Message.obtain();
@@ -277,10 +286,12 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
     }
 
 
-
+    /**
+     * 天气预报线程
+     */
     private class WeatherInfoThread implements Runnable {
 
-        private String city = "guilin";
+        private String city;
 
         public WeatherInfoThread(String city) {
             this.city = city;
@@ -305,30 +316,31 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
     }
 
 
-
+    /**
+     * 读取实时天气信息
+     */
     private void readperfernces() {
         //  读取用于设置
         SharedPreferences sharedPreferences = getSharedPreferences("city",
                 MODE_PRIVATE);
         // 使用getString方法获得value，注意第2个参数是value的默认值  无返回none
-        String string1 = sharedPreferences.getString("CITY", "0");
-        String string2 = sharedPreferences.getString("MAIN_TEMP", "0");
-        String string3 = sharedPreferences.getString("MAIN_INFO", "0");
-        String string4 = sharedPreferences.getString("TITLE_TEMP", "0");
-        String string7 = sharedPreferences.getString("WINDS", "0");
-        int string8 = sharedPreferences.getInt("CODE", 0);
-        String string10 = sharedPreferences.getString("PUSH", "0");
-        String string9 = sharedPreferences.getString("PRESSURE", "0");
+        String string1 = sharedPreferences.getString("CITY", "0");          //城市
+        String string2 = sharedPreferences.getString("MAIN_TEMP", "0");     //温度
+        String string3 = sharedPreferences.getString("MAIN_INFO", "0");     //天气
+        String string4 = sharedPreferences.getString("TITLE_TEMP", "0");    //标题栏温度
+        int string8 = sharedPreferences.getInt("CODE", 0);                  //天气编号
+        String string10 = sharedPreferences.getString("PUSH", "0");         //发布日期
 
         main_location.setText(string1);
-        Log.i("TITLE_TEMP",string9);
-        title_temp.setText(string4);  //  标题栏温度
+        Log.i("TITLE_TEMP",string1);
+        title_temp.setText(string4);  //标题栏温度
         main_temp.setText(string2);  //大温度
         main_info.setText(string3);  //优
         code = string8;
         push.setText(string10);
 
-        tianqi(code);               //  修改实时天气图标
+        //修改实时天气图标
+        tianqi(code);
     }
 
 
@@ -353,10 +365,14 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
         //  有数据  不会NULL
         //  运行定位
         location();
+        //随机更新背景图片
         readBCperfernces();
+        //更新空气质量
         readPmperfernces();
 
+        //下拉刷新
         mSwipeLayout.setOnRefreshListener(this);
+        //设置下拉刷新效果的样式
         mSwipeLayout.setColorScheme(R.color.colorAccent, android.R.color.holo_green_light,
                 android.R.color.holo_orange_light, android.R.color.holo_red_light);
         //开始定位
@@ -368,10 +384,11 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
             }
         });
 
-
+        //为分享按钮设置点击事件
         fenx.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //截图
                 screenshot();
                 if (imagePath != null) {
                     Intent intent = new Intent(Intent.ACTION_SEND); // 启动分享发送的属性
@@ -389,6 +406,9 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
         });
     }
 
+    /**
+     * 屏幕截图
+     */
     private void screenshot() {
         // 获取屏幕
         View dView = getWindow().getDecorView();
@@ -412,8 +432,9 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
         }
     }
 
-
-
+    /**
+     * 定位
+     */
     private void location() {
         //初始化定位
         mLocationClient = new AMapLocationClient(getApplicationContext());
@@ -442,23 +463,25 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
     //activity 再次回到前台
     protected void onResume() {
         super.onResume();
-        // 修复页面返回后的空指针
-
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mLocationClient.stopLocation();//停止定位
-        mLocationClient.onDestroy();//销毁定位客户端。
+        //停止定位
+        mLocationClient.stopLocation();
+        //销毁定位客户端
+        mLocationClient.onDestroy();
     }
 
+    /**
+     * 定位状态反馈
+     */
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
@@ -524,6 +547,11 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
         }
 
     }
+
+
+    /**
+     * 保存空气质量信息
+     */
     private void savePmperfernces(int pm, String air) {
 
         SharedPreferences mySharedPreferences = getSharedPreferences("pm", MODE_PRIVATE);
@@ -537,6 +565,9 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
         Log.e("保存成功", air);
     }
 
+    /**
+     * 更新空气质量
+     */
     private void readPmperfernces() {
         SharedPreferences sharedPreferences = getSharedPreferences("pm",
                 MODE_PRIVATE);
@@ -546,8 +577,10 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
         pm1.setText("空气" + air);
     }
 
+    /**
+     * 保存实时天气信息
+     */
     private boolean saveperfernces(String cityname, String main_temp, String main_info, String title_temp, String feels_like, String visibility, String winds, int code, String pressure, String push) {
-
 
         SharedPreferences mySharedPreferences = getSharedPreferences("city",
                 MODE_PRIVATE);
@@ -559,11 +592,8 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
         editor.putString("MAIN_TEMP", main_temp);
         editor.putString("MAIN_INFO", main_info);
         editor.putString("TITLE_TEMP", title_temp);
-        editor.putString("FEELS_LIKE", feels_like);
         editor.putString("VISIBILITY", visibility);
-        editor.putString("WINDS", winds);
         editor.putInt("CODE", code);
-        editor.putString("PRESSURE", pressure);
         editor.putString("PUSH", push);
         //提交当前数据
         editor.commit();
@@ -571,9 +601,9 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
         return editor.commit();
     }
 
-    //创建可供选择的菜单选项
-
-
+    /**
+     *创建可供选择的菜单选项
+     */
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         //填充选项菜单（读取XML文件、解析、加载到Menu组件上）
@@ -582,7 +612,6 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
     }
 
     //重写OptionsItemSelected(MenuItem item)来响应菜单项(MenuItem)的点击事件（根据id来区分是哪个item）
-
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
@@ -627,8 +656,10 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * 更新天气预报
+     */
     private void setDatas() {
-        //   将预报的天气  保存一个偏好设置
         Weather_model newWeather;
         SharedPreferences mySharedPreferences = getSharedPreferences("fore",
                 MODE_PRIVATE);
@@ -636,10 +667,15 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
         // 第一天
         newWeather = WeatherList.get(0);
         nowDateTime.setText("今天");
+        //获取当前天气编号（下同）
         int code1 = newWeather.getWeatherCode();
+        //更新天气图标（下同）
         onexiao(code1);
+        //设置天气信息（下同）
         nowWeatherInfo.setText(newWeather.getText_day());
+        //设置气温（下同）
         nowTempRange.setText(newWeather.getLow_temp() + "~" + newWeather.getHigh_temp() + "°");
+        //保存天气信息（下同）
         editor.putString("oneday", nowDateTime.getText().toString());
         editor.putString("oneyu", nowWeatherInfo.getText().toString());
         editor.putInt("onecode", code1);
@@ -680,9 +716,11 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
         editor.putString("fourtem", fourTempRange.getText().toString());
 
         editor.commit();
-
     }
 
+    /**
+     * 更新天气预报
+     */
     public void readfore() {
         SharedPreferences sharedPreferences = getSharedPreferences("fore",
                 MODE_PRIVATE);
@@ -726,6 +764,9 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
     }
 
 
+    /**
+     * 绑定控件
+     */
     public void bindViews() {
         fenx = (ImageButton) findViewById(R.id.share);
         push = (TextView) findViewById(R.id.push);
@@ -764,6 +805,9 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
 
     }
 
+    /**
+     * 实时更新天气图标
+     */
     public void tianqi(int code) {
         if (code == 100 || code == 900) {
             tianqi.setImageResource(R.mipmap.sunsun);
@@ -940,8 +984,6 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
     private void clearWeatherList() {
         WeatherList.clear();
     }
-
-
 }
 
 
