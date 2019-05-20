@@ -45,7 +45,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="吉林"
+                android:text="桂林"
                 android:textColor="@color/colorWhite"
                 android:textSize="18sp" />
         </RelativeLayout>
