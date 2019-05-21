@@ -42,7 +42,7 @@
             </intent-filter>
         </activity>
         <activity android:name="com.zhz_zsl.glutweather.About"/>
-
+        <activity android:name=".Map"/>
 
     </application>
 </manifest>
