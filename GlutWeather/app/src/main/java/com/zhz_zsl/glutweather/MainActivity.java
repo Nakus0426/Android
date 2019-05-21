@@ -32,6 +32,7 @@ import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
+import com.amap.api.maps2d.MapView;
 import com.zhz_zsl.glutweather.Toast.ToastUtils;
 import com.zhz_zsl.glutweather.model.Weather_model;
 import com.zhz_zsl.glutweather.utils.HttpDownloader;
@@ -385,52 +386,14 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
             }
         });
 
-        //为分享按钮设置点击事件
+        //为地图按钮设置点击事件
         fenx.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //截图
-                screenshot();
-                if (imagePath != null) {
-                    Intent intent = new Intent(Intent.ACTION_SEND); // 启动分享发送的属性
-                    File file = new File(imagePath);
-                    intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(file));// 分享的内容
-                    intent.setType("image/*");// 分享发送的数据类型
-                    Intent chooser = Intent.createChooser(intent, "天气分享");
-                    if (intent.resolveActivity(getPackageManager()) != null) {
-                        startActivity(chooser);
-                    }
-                } else {
-                    ToastUtils.showToast(MainActivity.this, "分享失败！");
-                }
+                Intent intent = new Intent(MainActivity.this,Map.class);
+                startActivity(intent);
             }
         });
-    }
-
-    /**
-     * 屏幕截图
-     */
-    private void screenshot() {
-        // 获取屏幕
-        View dView = getWindow().getDecorView();
-        dView.setDrawingCacheEnabled(true);
-        dView.buildDrawingCache();
-        Bitmap bmp = dView.getDrawingCache();
-        if (bmp != null) {
-            try {
-                // 获取内置SD卡路径
-                String sdCardPath = Environment.getExternalStorageDirectory().getPath();
-                // 图片文件路径
-                imagePath = sdCardPath + File.separator + "screenshot.png";
-
-                File file = new File(imagePath);
-                FileOutputStream os = new FileOutputStream(file);
-                bmp.compress(Bitmap.CompressFormat.PNG, 100, os);
-                os.flush();
-                os.close();
-            } catch (Exception e) {
-            }
-        }
     }
 
     /**
