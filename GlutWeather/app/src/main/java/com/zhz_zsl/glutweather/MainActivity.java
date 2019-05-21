@@ -805,6 +805,7 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
 
     /**
      * 实时更新天气图标
+     * 具体天气现象代码参考：https://docs.seniverse.com/api/start/code.html
      */
     public void tianqi(int code) {
         if (code == 100 || code == 900) {
