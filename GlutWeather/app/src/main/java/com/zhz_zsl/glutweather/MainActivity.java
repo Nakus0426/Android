@@ -217,6 +217,7 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
 
     /**
      * 空气质量信息线程
+     * API使用参考：https://docs.seniverse.com/api/start/key.html
      */
     private class WeatherpmThread implements Runnable {
 
