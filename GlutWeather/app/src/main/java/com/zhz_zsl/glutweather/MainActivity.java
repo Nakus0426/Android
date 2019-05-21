@@ -61,8 +61,6 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
     public AMapLocationClientOption mLocationOption = null;
     //声明mListener对象，定位监听器
 
-    //标识，用于判断是否只显示一次定位信息和用户重新定位
-    private boolean isFirstLoc = true;
     private List<Weather_model> WeatherList = new ArrayList<>();
     private int code;
     private ImageView tianqi;
@@ -359,7 +357,7 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
             Log.d("YWeather", "网络正常连接");
         } else {
             Log.d("YWeather", "网络挂了");
-            ToastUtils.showToast(MainActivity.this, "请打开网络");
+            ToastUtils.showToast(MainActivity.this, "请检查网络设置");
         }
         bindViews();
         //  有数据  不会NULL
@@ -978,7 +976,7 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
             fourxiao.setImageResource(R.mipmap.leibing);
         }
     }
-    
+
     //清空天气列表中的数据
     private void clearWeatherList() {
         WeatherList.clear();
