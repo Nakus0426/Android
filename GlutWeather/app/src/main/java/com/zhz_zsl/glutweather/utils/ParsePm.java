@@ -6,7 +6,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 /**
- * Created by 丽丽超可爱 on 2017/7/30.
+ * 解析空气质量
  */
 
 public class ParsePm {
