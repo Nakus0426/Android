@@ -44,6 +44,9 @@ import java.util.List;
 import java.util.Random;
 
 
+/**
+ * 项目最新代码可在Github查看：https://github.com/Nakus0426/Android/tree/master/GlutWeather
+ */
 public class MainActivity extends AppCompatActivity implements AMapLocationListener, SwipeRefreshLayout.OnRefreshListener {
 
     //实时天气情况信息
