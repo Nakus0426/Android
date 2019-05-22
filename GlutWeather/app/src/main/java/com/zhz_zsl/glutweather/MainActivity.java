@@ -5,9 +5,6 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.net.Uri;
-import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -32,7 +29,6 @@ import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
-import com.amap.api.maps2d.MapView;
 import com.zhz_zsl.glutweather.Toast.ToastUtils;
 import com.zhz_zsl.glutweather.model.Weather_model;
 import com.zhz_zsl.glutweather.utils.HttpDownloader;
@@ -41,8 +37,6 @@ import com.zhz_zsl.glutweather.utils.ParseNowWeatherUtil;
 import com.zhz_zsl.glutweather.utils.ParsePm;
 import com.zhz_zsl.glutweather.utils.ParseWeatherUtil;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
@@ -357,7 +351,7 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
         setContentView(R.layout.activity_main);
 
         //检查网络状态是否良好
-        if (NetUtil.getNetWorkState(this) != NetUtil.NETWORN_NONE) {
+        if (NetUtil.getNetWorkState(this) != NetUtil.NETWORK_NONE) {
             Log.d("YWeather", "网络正常连接");
         } else {
             Log.d("YWeather", "网络挂了");
@@ -385,6 +379,8 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
                 ToastUtils.showToast(getApplicationContext(), "已定位到当前城市：" + buffer.toString());
             }
         });
+
+
 
         //为地图按钮设置点击事件
         fenx.setOnClickListener(new View.OnClickListener() {
