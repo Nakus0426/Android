@@ -6,7 +6,6 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 /**
- * Created by SparklyYS on 2017/7/20
  * download 指定 url 的文本信息的工具类
  */
 
