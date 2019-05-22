@@ -61,7 +61,6 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
     private ImageView tianqi;
     public String city;
     private String city1 = "guilin";
-    private String city6;
 
     //天气信息控件
     //今天
@@ -97,7 +96,6 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
     private TextView main_location;       //所在城市
     private TextView main_temp;           //所在城市的实时温度
     private TextView main_info;           //所在城市的实时天气描述
-    private String city5;
     private ImageButton location;
     private StringBuffer buffer;
     private String imagePath;
@@ -295,12 +293,12 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
 
         public void run() {
             try {
-                city6 = URLEncoder.encode(city, "UTF-8");
+                city1 = URLEncoder.encode(city, "UTF-8");
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
 
             }
-            String address = "https://api.seniverse.com/v3/weather/daily.json?key=SXYZSglxbHO5vX5Ml&location=" + city6 + "&language=zh-Hans&unit=c&start=0&days=5";
+            String address = "https://api.seniverse.com/v3/weather/daily.json?key=SXYZSglxbHO5vX5Ml&location=" + city1 + "&language=zh-Hans&unit=c&start=0&days=5";
             HttpDownloader httpDownloader = new HttpDownloader();
             String jsonString = httpDownloader.download(address);
 
@@ -456,12 +454,11 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
                 buffer = new StringBuffer();
                 buffer.append(aMapLocation.getCity() + "");
                 city = buffer.toString();
-                Log.e("定位", "xx" + buffer.toString());
-                city5 = buffer.toString();
+                Log.e("定位", "xx" + city);
 
-                new Thread(new WeatherThread(buffer.toString())).start(); // 实况
-                new Thread(new WeatherInfoThread(city5)).start(); //  预报
-                new Thread(new WeatherpmThread(city5)).start();
+                new Thread(new WeatherThread(city)).start(); // 实况
+                new Thread(new WeatherInfoThread(city)).start(); //  预报
+                new Thread(new WeatherpmThread(city)).start();
                 mLocationClient.stopLocation();//停止定位
 
 
@@ -592,10 +589,10 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
                                 //  获取输入文字
                                 city = searchTextView.getText().toString();
                                 processThread();
+
                                 new Thread(new WeatherThread(city)).start();
-                                city5 = city;
-                                new Thread(new WeatherInfoThread(city5)).start();
-                                new Thread(new WeatherpmThread(city5)).start();
+                                new Thread(new WeatherInfoThread(city)).start();
+                                new Thread(new WeatherpmThread(city)).start();
                             }
                         })
                         .setNegativeButton("取消", new DialogInterface.OnClickListener() {
