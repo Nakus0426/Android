@@ -6,7 +6,7 @@ import android.widget.ScrollView;
 
 /**
  */
-  //   使 ScrollView 具有弹性
+  //   使 ScrollView（垂直滚动容器） 具有弹性
 public class MtScrollView  extends ScrollView {
 
 
@@ -27,6 +27,7 @@ public class MtScrollView  extends ScrollView {
          */
         @Override
         public void fling(int velocityY) {
+            //使滑动速度减半
             super.fling(velocityY / 2);
         }
     }
