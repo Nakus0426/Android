@@ -6,7 +6,6 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 /**
- * Created by SparklyYS on 2017/7/20.
  * 解析返回的JSON字符串工具类
  * 解析实时天气
  */
