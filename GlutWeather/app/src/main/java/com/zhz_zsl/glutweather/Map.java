@@ -10,10 +10,14 @@ import com.amap.api.maps2d.MapView;
 import com.amap.api.maps2d.model.MyLocationStyle;
 import com.zhz_zsl.glutweather.R;
 
+/**
+ * 详情参考高德地图API：https://lbs.amap.com/api/android-sdk/guide/create-map/show-map
+ */
 public class Map extends Activity {
     MapView mMapView = null;
     AMap aMap = null;
 
+    //显示地图
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,6 +34,9 @@ public class Map extends Activity {
         mapPoint();
     }
 
+    /**
+     * 显示定位蓝点
+     */
     protected void mapPoint() {
         MyLocationStyle myLocationStyle;
         //初始化定位蓝点样式类myLocationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_LOCATION_ROTATE);
