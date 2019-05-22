@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by SparklyYS on 2017/7/21.
  * 解析返回的JSON字符串工具类
  * 解析实时天气
  * 解析天气列表
